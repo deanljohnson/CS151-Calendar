@@ -74,13 +74,19 @@ public class CalendarView extends JPanel {
 	}
 	//Calendar panel
 	JPanel drawCal(Calendar c){
-		int noOfWeeks = 6;
+		int nRows = 6;
 		if(c.getActualMaximum(Calendar.DAY_OF_MONTH)==31) {
 			if(c.get(Calendar.DAY_OF_WEEK) == 6 || c.get(Calendar.DAY_OF_WEEK) == 7 ){
-				noOfWeeks = 7;
+				nRows = 7;
 			}
-		}else noOfWeeks=6;
-		JPanel calDays = new JPanel(new GridLayout(noOfWeeks,7));
+		}else if(c.getActualMaximum(Calendar.DAY_OF_MONTH)==30){
+			if(c.get(Calendar.DAY_OF_WEEK) == 7 ){
+				nRows = 7;
+			}
+		}
+		else nRows=6;
+		
+		JPanel calDays = new JPanel(new GridLayout(nRows,7));
 		int w = (int) (width/1.2);
 		int h = (int) (height/1.2);
 		calDays.setPreferredSize(new Dimension(w, h));

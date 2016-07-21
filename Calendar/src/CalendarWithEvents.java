@@ -1,10 +1,7 @@
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class CalendarWithEvents extends GregorianCalendar {
 	public CalendarWithEvents(){	
-		//TODO: Setup the events map and initialize the calendar
-		
-		
+		//TODO: Setup the events map and initialize the calendar	
 	}
 }
