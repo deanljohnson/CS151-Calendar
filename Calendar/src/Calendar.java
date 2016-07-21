@@ -1,13 +1,11 @@
 import java.awt.FlowLayout;
-import java.util.GregorianCalendar;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Calendar {
-	private static final int WIDTH = 650;
-	private static final int HEIGHT = 300;
+	private static final int WIDTH = 1050;
+	private static final int HEIGHT = 700;
 	
 	public static void main(String[] args){
 		CalendarWithEvents calendar = new CalendarWithEvents();
@@ -25,7 +23,7 @@ public class Calendar {
 		//TODO: Hook action listeners from calNavPanel into the calView
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
-		CalendarView calView = new CalendarView(calendar, 200, 200);
+		CalendarView calView = new CalendarView(calendar, 500, 500);
 		leftPanel.add(calNavPanel);
 		leftPanel.add(calView);
 		
@@ -35,7 +33,7 @@ public class Calendar {
 		//TODO: Hook action listeners from eventSelPanel into the eventDisplay
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
 		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel();
-		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar, 300, 200);
+		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar, 500, 500);
 		rightPanel.add(eventSelPanel);
 		rightPanel.add(eventDisplay);
 
