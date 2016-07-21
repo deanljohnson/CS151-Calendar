@@ -1,7 +1,49 @@
+import java.awt.FlowLayout;
+import java.util.GregorianCalendar;
+
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Calendar {
+	private static final int WIDTH = 650;
+	private static final int HEIGHT = 300;
+	
 	public static void main(String[] args){
-		System.out.println("test.");
-		System.out.println("test2");
+		CalendarWithEvents calendar = new CalendarWithEvents();
+		
+		JFrame frame = new JFrame();
+		frame.setSize(WIDTH, HEIGHT);
+		
+		frame.setLayout(new FlowLayout());
+		
+		JPanel leftPanel = new JPanel();
+		JPanel rightPanel = new JPanel();
+		
+		//Setup the left panel. This includes the buttons to navigate the calendar,
+		//as well as the calendar itself
+		//TODO: Hook action listeners from calNavPanel into the calView
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
+		CalendarView calView = new CalendarView(calendar, 200, 200);
+		leftPanel.add(calNavPanel);
+		leftPanel.add(calView);
+		
+		
+		//Setup the right panel. This includes the row of buttons to filter events,
+		//(day, week, month, agenda), and a panel that show the events
+		//TODO: Hook action listeners from eventSelPanel into the eventDisplay
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel();
+		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar, 300, 200);
+		rightPanel.add(eventSelPanel);
+		rightPanel.add(eventDisplay);
+
+		
+		frame.add(leftPanel);
+		frame.add(rightPanel);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 }
