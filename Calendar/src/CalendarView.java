@@ -49,6 +49,7 @@ public class CalendarView extends JPanel {
 	JPanel drawCal(Calendar c){
 		int initialDay = c.get(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.DAY_OF_MONTH, 1);
+		int buttonsAdded = 0;
 		
 		int nRows = 6;
 		if(c.getActualMaximum(Calendar.DAY_OF_MONTH)==31) {
@@ -68,7 +69,7 @@ public class CalendarView extends JPanel {
 		calDays.setPreferredSize(new Dimension(w, h));
 		calDays.setMaximumSize(new Dimension(w, h));
 		
-		for (int j=0; j<arrayOfDays.length; j++){
+		for (int j=0; j<arrayOfDays.length; j++, buttonsAdded++){
 			JButton kButton = new JButton(""+arrayOfDays[j].toString().charAt(0));
 			kButton.setBackground(new Color(75, 75, 255, 255));
 			kButton.setForeground(Color.BLACK);
@@ -77,19 +78,26 @@ public class CalendarView extends JPanel {
 		};
 		
 		int start  = c.get(Calendar.DAY_OF_WEEK)-1;
-		for (int j = 0; j< start; j++){
+		for (int j = 0; j< start; j++, buttonsAdded++){
 			JButton dummyButton = new JButton("");
 			dummyButton.setEnabled(false);
 			calDays.add(dummyButton);
 
 		}
-		for (int i=1; i<=c.getActualMaximum(Calendar.DAY_OF_MONTH);i++){
+		for (int i=1; i<=c.getActualMaximum(Calendar.DAY_OF_MONTH); i++, buttonsAdded++){
 			JButton dayButton = new JButton(""+i);
 			calDays.add(dayButton);
 			
 			//TODO: Add factory method listeners
 		}
 		
+		//Add dummy buttons for days at the end of the month
+		for (; buttonsAdded < nRows * 7; buttonsAdded++){
+			JButton dummyButton = new JButton("");
+			dummyButton.setEnabled(false);
+			calDays.add(dummyButton);
+		}
+
 		c.set(Calendar.DAY_OF_MONTH, initialDay);
 		return calDays;
 	}
