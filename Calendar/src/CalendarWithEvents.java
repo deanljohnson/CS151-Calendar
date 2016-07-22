@@ -9,8 +9,9 @@ public class CalendarWithEvents extends GregorianCalendar {
 	private ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
 	private ArrayList<Event> events;
 	
-	public CalendarWithEvents(){	
-		//TODO: Setup the events map and initialize the calendar	
+	public CalendarWithEvents(ArrayList<Event> events){	
+		//TODO: Setup the events map and initialize the calendar
+		this.events =events;
 	}
 	
 	public void addChangeListener(ChangeListener l){
@@ -72,7 +73,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 		return dayEvents;
 	}
 	
-	private void notifyOfChange(){
+	public void notifyOfChange(){
 		ChangeEvent ce = new ChangeEvent(this);
 		for (ChangeListener l : changeListeners)
 			l.stateChanged(ce);

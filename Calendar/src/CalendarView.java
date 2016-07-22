@@ -218,7 +218,9 @@ public class CalendarView extends JPanel {
 				Date sTime = (Date) time.parse(sTimeField.getText());
 				Date eTime = (Date) time.parse(sTimeField.getText());
 				
-//				System.out.println(eTitle+"\n"+ date+"\n Start Time: "+sTime+" \n End Time:"+eTime);
+				Event ev = new Event(eTitle, date, sTime, eTime);
+				cal.addEvent(ev);
+				cal.notifyOfChange();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

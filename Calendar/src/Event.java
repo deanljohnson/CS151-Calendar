@@ -1,14 +1,13 @@
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.Calendar;
 
 public class Event {
 	private Calendar cal;
-	private LocalTime startTime;
-	private LocalTime endTime;
+	private Date startTime;
+	private Date endTime;
 	private String eventTitle;
 	
-	Event(String eventTitle, Date date, LocalTime startTime, LocalTime endTime){
+	Event(String eventTitle, Date date, Date startTime, Date endTime){
 		this.cal = Calendar.getInstance();
 		this.cal.setTime(date);
 		this.startTime = startTime;
@@ -29,11 +28,11 @@ public class Event {
 		return cal.get(Calendar.DAY_OF_MONTH);
 	}
 	
-	public LocalTime getStartTime(){
+	public Date getStartTime(){
 		return this.startTime;
 	}
 	
-	public LocalTime getEndTime(){
+	public Date getEndTime(){
 		return this.endTime;
 	}
 	

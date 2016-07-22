@@ -1,6 +1,7 @@
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -11,7 +12,12 @@ public class Calendar {
 	private static final int HEIGHT = 700;
 	
 	public static void main(String[] args){
-		CalendarWithEvents calendar = new CalendarWithEvents();
+		
+		//When we implement the 'from file' part it can be fed here.
+		ArrayList<Event> evnts = new ArrayList<Event>();
+		
+		
+		CalendarWithEvents calendar = new CalendarWithEvents(evnts);
 		
 		JFrame frame = new JFrame();
 		frame.setSize(WIDTH, HEIGHT);
