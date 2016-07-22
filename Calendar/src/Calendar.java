@@ -28,6 +28,11 @@ public class Calendar {
 		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
 		CalendarView calView = new CalendarView(calendar, 500, 500);
 		
+		calNavPanel.getTodayButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				calView.moveToToday();
+			}
+		});
 		calNavPanel.getPrevButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				calView.moveToPrevMonth();

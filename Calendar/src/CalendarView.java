@@ -40,8 +40,6 @@ public class CalendarView extends JPanel {
 		currentMonth = new JLabel(arrayOfMonths[cal.get(Calendar.MONTH)]+", "+cal.get(Calendar.YEAR));
 		currentMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(currentMonth);
-
-		cal.set(Calendar.DAY_OF_MONTH, 1);
 		
 		add(drawCal(cal));
 		
@@ -88,16 +86,22 @@ public class CalendarView extends JPanel {
 		return calDays;
 	}
 
+	public void moveToToday(){
+		calendar.setTime(Calendar.getInstance().getTime());
+		refreshCalendar();
+	}
+	
 	public void moveToPrevMonth(){
 		calendar.add(Calendar.MONTH, -1);
-		currentMonth.setText(arrayOfMonths[calendar.get(Calendar.MONTH)].toString()+", "+calendar.get(Calendar.YEAR));
-		repaint();
-		remove(1); //removes the old calendar
-		add(drawCal(calendar)); //draws the new calendar
+		refreshCalendar();
 	}
 	
 	public void moveToNextMonth(){
 		calendar.add(Calendar.MONTH, 1);
+		refreshCalendar();
+	}
+	
+	private void refreshCalendar(){
 		currentMonth.setText(arrayOfMonths[calendar.get(Calendar.MONTH)].toString()+", "+calendar.get(Calendar.YEAR));
 		repaint();
 		remove(1);
