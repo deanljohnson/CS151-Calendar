@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -64,9 +65,11 @@ public class CalendarView extends JPanel {
 		calDays.setPreferredSize(new Dimension(w, h));
 		calDays.setMaximumSize(new Dimension(w, h));
 		
-		
 		for (int j=0; j<arrayOfDays.length; j++){
 			JButton kButton = new JButton(""+arrayOfDays[j].toString().charAt(0));
+			kButton.setBackground(new Color(75, 75, 255, 255));
+			kButton.setForeground(Color.BLACK);
+			kButton.setEnabled(false);
 			calDays.add(kButton);
 		};
 		
