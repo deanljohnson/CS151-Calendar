@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 import javax.swing.BoxLayout;
@@ -17,15 +19,18 @@ enum DAYS{
 }
 
 public class CalendarView extends JPanel {
-	private CalendarWithEvents calendar;
+	private CalendarWithEvents cal;
 	private int width;
 	private int height;
 	JLabel currentMonth ;
 	DAYS[] arrayOfDays = DAYS.values();
 	MONTHS[] arrayOfMonths = MONTHS.values();
+	JButton selectedButton; // saved selected button
+	int selectedDate; // track selected date & probably need to change to Date type or Calendar
 	
-	public CalendarView(CalendarWithEvents cal, int w, int h){
-		calendar = cal;
+	public CalendarView(CalendarWithEvents calendar, int w, int h){
+		cal = calendar;
+		selectedDate = cal.get(Calendar.DAY_OF_MONTH); // initialize date to highlight button
 		
 		//We want to track the width and height - we will use this info
 		//to create the icons for each individual day later
@@ -87,8 +92,29 @@ public class CalendarView extends JPanel {
 		for (int i=1; i<=c.getActualMaximum(Calendar.DAY_OF_MONTH); i++, buttonsAdded++){
 			JButton dayButton = new JButton(""+i);
 			calDays.add(dayButton);
+			int day = i;
 			
 			//TODO: Add factory method listeners
+			dayButton.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// erase previous button background and select new button
+					select(dayButton, day);
+					//TODO: link to event display
+					
+				}
+			});
+			
+			// highlight today's date button
+			if(day == selectedDate){
+				select(dayButton, day);
+			}
+			// when change month in calendar view if selected date is out of range
+			// set the selected button and date to the maximum date
+			if(selectedDate > c.getActualMaximum(Calendar.DAY_OF_MONTH) &&
+					day == c.getActualMaximum(Calendar.DAY_OF_MONTH)){
+				select(dayButton, day);
+			}
 		}
 		
 		//Add dummy buttons for days at the end of the month
@@ -101,26 +127,37 @@ public class CalendarView extends JPanel {
 		c.set(Calendar.DAY_OF_MONTH, initialDay);
 		return calDays;
 	}
-
+	// erase previous button background and select new button
+	public void select(JButton b, int d){
+		// if there are button has been selected, set background to null
+		if(selectedButton != null){
+			selectedButton.setBackground(null);
+		}
+		
+		selectedButton = b;
+		selectedButton.setBackground(Color.CYAN);
+		selectedDate = d; // update selected day
+	}
 	public void moveToToday(){
-		calendar.setTime(Calendar.getInstance().getTime());
+		cal.setTime(Calendar.getInstance().getTime());
+		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
 		refreshCalendar();
 	}
 	
 	public void moveToPrevMonth(){
-		calendar.add(Calendar.MONTH, -1);
+		cal.add(Calendar.MONTH, -1);
 		refreshCalendar();
 	}
 	
 	public void moveToNextMonth(){
-		calendar.add(Calendar.MONTH, 1);
+		cal.add(Calendar.MONTH, 1);
 		refreshCalendar();
 	}
 	
 	private void refreshCalendar(){
-		currentMonth.setText(arrayOfMonths[calendar.get(Calendar.MONTH)].toString()+", "+calendar.get(Calendar.YEAR));
+		currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
 		repaint();
 		remove(1);
-		add(drawCal(calendar));
+		add(drawCal(cal));
 	}
 }
