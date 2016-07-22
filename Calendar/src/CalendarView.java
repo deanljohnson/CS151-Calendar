@@ -47,6 +47,9 @@ public class CalendarView extends JPanel {
 	}
 	//Calendar panel
 	JPanel drawCal(Calendar c){
+		int initialDay = c.get(Calendar.DAY_OF_MONTH);
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		
 		int nRows = 6;
 		if(c.getActualMaximum(Calendar.DAY_OF_MONTH)==31) {
 			if(c.get(Calendar.DAY_OF_WEEK) == 6 || c.get(Calendar.DAY_OF_WEEK) == 7 ){
@@ -76,6 +79,7 @@ public class CalendarView extends JPanel {
 		int start  = c.get(Calendar.DAY_OF_WEEK)-1;
 		for (int j = 0; j< start; j++){
 			JButton dummyButton = new JButton("");
+			dummyButton.setEnabled(false);
 			calDays.add(dummyButton);
 
 		}
@@ -84,8 +88,9 @@ public class CalendarView extends JPanel {
 			calDays.add(dayButton);
 			
 			//TODO: Add factory method listeners
-		}	
+		}
 		
+		c.set(Calendar.DAY_OF_MONTH, initialDay);
 		return calDays;
 	}
 
