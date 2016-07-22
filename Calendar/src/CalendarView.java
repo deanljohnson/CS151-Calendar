@@ -4,12 +4,17 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 enum MONTHS{
 	January, February, March, April, May, June, July, August, September, October, November, December;
@@ -25,6 +30,7 @@ public class CalendarView extends JPanel {
 	JLabel currentMonth ;
 	DAYS[] arrayOfDays = DAYS.values();
 	MONTHS[] arrayOfMonths = MONTHS.values();
+	JButton createButton;
 	JButton selectedButton; // saved selected button
 	int selectedDate; // track selected date & probably need to change to Date type or Calendar
 	
@@ -42,6 +48,14 @@ public class CalendarView extends JPanel {
 		//This helps keep parent LayoutManagers from changing our size
 		setPreferredSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
+		
+		createButton = new JButton("Create");
+		createButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				launchDialog();
+			}
+		});
+		add(createButton);
 		
 		currentMonth = new JLabel(arrayOfMonths[cal.get(Calendar.MONTH)]+", "+cal.get(Calendar.YEAR));
 		currentMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -176,5 +190,42 @@ public class CalendarView extends JPanel {
 		repaint();
 		remove(1);
 		add(drawCal(cal));
+	}
+	
+	private void launchDialog(){
+		JTextField  titleField = new JTextField(20);
+		JTextField dateField = new JTextField(10);
+		JTextField sTimeField = new JTextField(5);
+		JTextField eTimeField = new JTextField(5);
+		
+		JPanel consolePanel = new JPanel();
+		consolePanel.add(new JLabel("Event Title"));
+		consolePanel.add(titleField);
+		consolePanel.add(new JLabel("Date"));
+		consolePanel.add(dateField);
+		consolePanel.add(new JLabel("Start Time"));
+		consolePanel.add(sTimeField);
+		consolePanel.add(new JLabel("End Time"));
+		consolePanel.add(eTimeField);
+		
+		int response = JOptionPane.showConfirmDialog(null, consolePanel, "Create Event", JOptionPane.OK_CANCEL_OPTION);
+		if (response == JOptionPane.OK_OPTION){
+			String eTitle = titleField.getText();
+			SimpleDateFormat eDate = new SimpleDateFormat("mm/dd/yyyy");
+			SimpleDateFormat time = new SimpleDateFormat("hh:mm");
+			try {
+				Date date = (Date) eDate.parse(dateField.getText());
+				Date sTime = (Date) time.parse(sTimeField.getText());
+				Date eTime = (Date) time.parse(sTimeField.getText());
+				
+//				System.out.println(eTitle+"\n"+ date+"\n Start Time: "+sTime+" \n End Time:"+eTime);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
 	}
 }
