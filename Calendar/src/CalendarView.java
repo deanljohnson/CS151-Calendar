@@ -101,7 +101,8 @@ public class CalendarView extends JPanel {
 					// erase previous button background and select new button
 					select(dayButton, day);
 					//TODO: link to event display
-					
+					cal.set(cal.get(Calendar.YEAR), 
+							cal.get(Calendar.MONTH), day);
 				}
 			});
 			
@@ -139,9 +140,25 @@ public class CalendarView extends JPanel {
 		selectedDate = d; // update selected day
 	}
 	public void moveToToday(){
+		if(cal.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) &&
+				cal.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
+			/*
+			if(cal.get(Calendar.DAY_OF_MONTH) == selectedDate){
+				return;
+			}
+			else{
+				System.out.println("!!!");
+				selectedDate = cal.get(Calendar.DAY_OF_MONTH);
+				refreshCalendar();
+			}
+			*/
+			return;
+		}
+		else{
 		cal.setTime(Calendar.getInstance().getTime());
 		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
 		refreshCalendar();
+		}
 	}
 	
 	public void moveToPrevMonth(){
