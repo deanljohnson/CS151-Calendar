@@ -1,12 +1,9 @@
-import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +22,7 @@ public class CalendarView extends JPanel {
 	JLabel currentMonth ;
 	DAYS[] arrayOfDays = DAYS.values();
 	MONTHS[] arrayOfMonths = MONTHS.values();
+	
 	public CalendarView(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		
@@ -33,42 +31,18 @@ public class CalendarView extends JPanel {
 		this.width = w;
 		this.height = h;
 		
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		
 		//This helps keep parent LayoutManagers from changing our size
 		setPreferredSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
 		
-		//Set a border, just so we can visualize where it is for now
-		setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
-		///
 		currentMonth = new JLabel(arrayOfMonths[cal.get(Calendar.MONTH)]+", "+cal.get(Calendar.YEAR));
+		currentMonth.setAlignmentX(Component.CENTER_ALIGNMENT);
 		add(currentMonth);
 
 		cal.set(Calendar.DAY_OF_MONTH, 1);
-		JButton monthArrow1 = new JButton ("<");
-		JButton monthArrow2 = new JButton (">");
 		
-		monthArrow1.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent event){
-				cal.add(Calendar.MONTH, -1);
-				currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
-				repaint();
-				remove(3); //removes the old calendar
-				add(drawCal(cal)); //draws the new calendar
-			}
-		});
-		monthArrow2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent event){
-				cal.add(Calendar.MONTH, 1);
-				currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
-				repaint();
-				remove(3);
-				add(drawCal(cal));
-			}
-		});
-		
-		add(monthArrow1);
-		add(monthArrow2);
 		add(drawCal(cal));
 		
 	}
@@ -114,4 +88,19 @@ public class CalendarView extends JPanel {
 		return calDays;
 	}
 
+	public void moveToPrevMonth(){
+		calendar.add(Calendar.MONTH, -1);
+		currentMonth.setText(arrayOfMonths[calendar.get(Calendar.MONTH)].toString()+", "+calendar.get(Calendar.YEAR));
+		repaint();
+		remove(1); //removes the old calendar
+		add(drawCal(calendar)); //draws the new calendar
+	}
+	
+	public void moveToNextMonth(){
+		calendar.add(Calendar.MONTH, 1);
+		currentMonth.setText(arrayOfMonths[calendar.get(Calendar.MONTH)].toString()+", "+calendar.get(Calendar.YEAR));
+		repaint();
+		remove(1);
+		add(drawCal(calendar));
+	}
 }

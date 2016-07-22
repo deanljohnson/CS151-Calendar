@@ -1,4 +1,7 @@
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,6 +27,18 @@ public class Calendar {
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
 		CalendarView calView = new CalendarView(calendar, 500, 500);
+		
+		calNavPanel.getPrevButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				calView.moveToPrevMonth();
+			}
+		});
+		calNavPanel.getNextButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				calView.moveToNextMonth();
+			}
+		});
+		
 		leftPanel.add(calNavPanel);
 		leftPanel.add(calView);
 		
