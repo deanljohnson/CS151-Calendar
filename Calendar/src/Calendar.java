@@ -23,7 +23,6 @@ public class Calendar {
 		
 		//Setup the left panel. This includes the buttons to navigate the calendar,
 		//as well as the calendar itself
-		//TODO: Hook action listeners from calNavPanel into the calView
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
 		CalendarView calView = new CalendarView(calendar, 500, 500);
@@ -50,10 +49,29 @@ public class Calendar {
 		
 		//Setup the right panel. This includes the row of buttons to filter events,
 		//(day, week, month, agenda), and a panel that show the events
-		//TODO: Hook action listeners from eventSelPanel into the eventDisplay
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
 		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel();
 		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar, 500, 500);
+		eventSelPanel.getDayButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Day);
+			}
+		});
+		eventSelPanel.getWeekButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Week);
+			}
+		});
+		eventSelPanel.getMonthButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Month);
+			}
+		});
+		eventSelPanel.getAgendaButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Agenda);
+			}
+		});
 		rightPanel.add(eventSelPanel);
 		rightPanel.add(eventDisplay);
 
