@@ -59,7 +59,6 @@ public class EventDisplayPanel extends JPanel {
 		if (filter == FilterType.Day){
 			eventList = calendar.getEventsToday();
 			display(eventList);
-			
 		}else if (filter == FilterType.Week){
 			eventList = calendar.getEventsThisWeek();
 			display(eventList);
@@ -67,13 +66,13 @@ public class EventDisplayPanel extends JPanel {
 			eventList = calendar.getEventsThisMonth();
 			display(eventList);
 		}
-		
 	}
-	void display(ArrayList<Event> eventList){
+	
+	private void display(ArrayList<Event> eventList){
 		String disp="";
 		for(Event e : eventList){
-			disp+=e.getEventTitle() +"\t"+e.getStartTime();
-			textArea.setText(disp);
+			disp+=e.getEventTitle() + "\t" + e.getStartTime() + "-" + e.getEndTime();
 		}
+		textArea.setText(disp);
 	}
 }

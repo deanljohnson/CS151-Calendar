@@ -26,6 +26,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 	
 	public void addEvent(Event event){
 		events.add(event);
+		notifyOfChange();
 	}
 	
 	public ArrayList<Event> getEventsThisMonth(){
@@ -73,7 +74,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 		return dayEvents;
 	}
 	
-	public void notifyOfChange(){
+	private void notifyOfChange(){
 		ChangeEvent ce = new ChangeEvent(this);
 		for (ChangeListener l : changeListeners)
 			l.stateChanged(ce);

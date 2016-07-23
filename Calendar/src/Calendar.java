@@ -48,7 +48,11 @@ public class Calendar {
 				calView.moveToNextMonth();
 			}
 		});
-		
+		calNavPanel.getCreateButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				CreateEventDialog.ShowDialog(calendar);
+			}
+		});
 		leftPanel.add(calNavPanel);
 		leftPanel.add(calView);
 		
