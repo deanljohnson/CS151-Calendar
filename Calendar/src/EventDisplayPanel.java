@@ -18,12 +18,14 @@ public class EventDisplayPanel extends JPanel {
 	private FilterType filter = FilterType.Day;
 	private int width;
 	private int height;
-	JTextArea textArea;
+	private JTextArea textArea;
 	
 	public EventDisplayPanel(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		
 		textArea = new JTextArea();
+		textArea.setEditable(false);
+		
 		setLayout(new BorderLayout());
 		add(textArea, BorderLayout.CENTER);
 		

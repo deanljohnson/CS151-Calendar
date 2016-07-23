@@ -2,6 +2,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Calendar;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -10,10 +11,12 @@ import javax.swing.JTextField;
 
 public class CreateEventDialog {
 	public static void ShowDialog(CalendarWithEvents cal){
-		JTextField  titleField = new JTextField(20);
+		JTextField titleField = new JTextField(20);
 		JTextField dateField = new JTextField(10);
 		JTextField sTimeField = new JTextField(5);
 		JTextField eTimeField = new JTextField(5);
+		
+		dateField.setText((cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		
 		JPanel consolePanel = new JPanel();
 		consolePanel.add(new JLabel("Event Title"));
