@@ -34,6 +34,10 @@ public class CalendarWithEvents extends GregorianCalendar {
 		notifyOfChange();
 	}
 	
+	public ArrayList<Event> getEventsAgenda(){
+		return events;
+	}
+	
 	public ArrayList<Event> getEventsThisMonth(){
 		ArrayList<Event> monthEvents = new ArrayList<Event>();
 		
