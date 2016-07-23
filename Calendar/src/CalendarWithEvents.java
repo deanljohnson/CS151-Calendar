@@ -7,11 +7,9 @@ import javax.swing.event.ChangeListener;
 
 public class CalendarWithEvents extends GregorianCalendar {
 	private ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
-	private ArrayList<Event> events;
+	private ArrayList<Event> events = new ArrayList<Event>();
 	
-	public CalendarWithEvents(ArrayList<Event> events){	
-		//TODO: Setup the events map and initialize the calendar
-		this.events =events;
+	public CalendarWithEvents(){	
 	}
 	
 	public void addChangeListener(ChangeListener l){
@@ -26,6 +24,13 @@ public class CalendarWithEvents extends GregorianCalendar {
 	
 	public void addEvent(Event event){
 		events.add(event);
+		notifyOfChange();
+	}
+	
+	public void addEvents(ArrayList<Event> events){
+		for (Event e : events)
+			this.events.add(e);
+		
 		notifyOfChange();
 	}
 	

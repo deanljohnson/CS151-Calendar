@@ -19,6 +19,7 @@ public class EventDisplayPanel extends JPanel {
 	private int width;
 	private int height;
 	JTextArea textArea;
+	
 	public EventDisplayPanel(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		

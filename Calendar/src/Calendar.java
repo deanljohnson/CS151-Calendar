@@ -12,12 +12,7 @@ public class Calendar {
 	private static final int HEIGHT = 700;
 	
 	public static void main(String[] args){
-		
-		//When we implement the 'from file' part it can be fed here.
-		ArrayList<Event> evnts = new ArrayList<Event>();
-		
-		
-		CalendarWithEvents calendar = new CalendarWithEvents(evnts);
+		CalendarWithEvents calendar = new CalendarWithEvents();
 		
 		JFrame frame = new JFrame();
 		frame.setSize(WIDTH, HEIGHT);

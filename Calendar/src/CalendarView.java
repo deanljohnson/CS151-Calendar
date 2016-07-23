@@ -4,18 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Calendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 enum MONTHS{
 	January, February, March, April, May, June, July, August, September, October, November, December;
@@ -56,8 +50,49 @@ public class CalendarView extends JPanel {
 		add(drawCal(cal));
 		
 	}
-	//Calendar panel
-	JPanel drawCal(Calendar c){
+	
+	// erase previous button background and select new button
+	public void select(JButton b, int d){
+		// if there are button has been selected, set background to null
+		if(selectedButton != null){
+			selectedButton.setBackground(null);
+		}
+		
+		selectedButton = b;
+		selectedButton.setBackground(Color.CYAN);
+		selectedDate = d; // update selected day
+	}
+	
+	public void moveToToday(){
+		if(cal.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) &&
+				cal.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
+			return;
+		}
+		else{
+		cal.setTime(Calendar.getInstance().getTime());
+		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
+		refreshCalendar();
+		}
+	}
+	
+	public void moveToPrevMonth(){
+		cal.add(Calendar.MONTH, -1);
+		refreshCalendar();
+	}
+	
+	public void moveToNextMonth(){
+		cal.add(Calendar.MONTH, 1);
+		refreshCalendar();
+	}
+	
+	private void refreshCalendar(){
+		currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
+		repaint();
+		remove(1);
+		add(drawCal(cal));
+	}
+	
+	private JPanel drawCal(Calendar c){
 		int initialDay = c.get(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.DAY_OF_MONTH, 1);
 		int buttonsAdded = 0;
@@ -95,18 +130,17 @@ public class CalendarView extends JPanel {
 			calDays.add(dummyButton);
 
 		}
+		
 		for (int i=1; i<=c.getActualMaximum(Calendar.DAY_OF_MONTH); i++, buttonsAdded++){
 			JButton dayButton = new JButton(""+i);
 			calDays.add(dayButton);
 			int day = i;
 			
-			//TODO: Add factory method listeners
 			dayButton.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// erase previous button background and select new button
 					select(dayButton, day);
-					//TODO: link to event display
 					cal.set(Calendar.DAY_OF_MONTH, day);
 				}
 			});
@@ -132,55 +166,5 @@ public class CalendarView extends JPanel {
 
 		c.set(Calendar.DAY_OF_MONTH, initialDay);
 		return calDays;
-	}
-	// erase previous button background and select new button
-	public void select(JButton b, int d){
-		// if there are button has been selected, set background to null
-		if(selectedButton != null){
-			selectedButton.setBackground(null);
-		}
-		
-		selectedButton = b;
-		selectedButton.setBackground(Color.CYAN);
-		selectedDate = d; // update selected day
-	}
-	
-	public void moveToToday(){
-		if(cal.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) &&
-				cal.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
-			/*
-			if(cal.get(Calendar.DAY_OF_MONTH) == selectedDate){
-				return;
-			}
-			else{
-				System.out.println("!!!");
-				selectedDate = cal.get(Calendar.DAY_OF_MONTH);
-				refreshCalendar();
-			}
-			*/
-			return;
-		}
-		else{
-		cal.setTime(Calendar.getInstance().getTime());
-		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
-		refreshCalendar();
-		}
-	}
-	
-	public void moveToPrevMonth(){
-		cal.add(Calendar.MONTH, -1);
-		refreshCalendar();
-	}
-	
-	public void moveToNextMonth(){
-		cal.add(Calendar.MONTH, 1);
-		refreshCalendar();
-	}
-	
-	private void refreshCalendar(){
-		currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
-		repaint();
-		remove(1);
-		add(drawCal(cal));
 	}
 }
