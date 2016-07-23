@@ -1,9 +1,9 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Calendar;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,9 +40,8 @@ public class CreateEventDialog {
 				
 				Event ev = new Event(eTitle, date, sTime, eTime);
 				cal.addEvent(ev);
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(null, "Time format must be HH:MM", "Input Error", JOptionPane.INFORMATION_MESSAGE); //TODO: Doesn't execute
-				e.printStackTrace();
+			} catch (DateTimeParseException | ParseException e) {
+				JOptionPane.showMessageDialog(null, "Time format must be HH:MM", "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
