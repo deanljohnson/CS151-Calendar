@@ -8,7 +8,8 @@ public class Event {
 	private LocalTime endTime;
 	private String eventTitle;
 	
-	Event(String eventTitle, Date date, LocalTime startTime, LocalTime endTime){
+	Event(String eventTitle, Date date, LocalTime startTime, LocalTime endTime) throws Exception{
+		if(startTime.isAfter(endTime)) throw new Exception("Start time should be ahead of end time.");
 		this.cal = Calendar.getInstance();
 		this.cal.setTime(date);
 		this.startTime = startTime;
