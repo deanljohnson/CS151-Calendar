@@ -41,6 +41,7 @@ public class CreateEventDialog {
 				Event ev = new Event(eTitle, date, sTime, eTime);
 				cal.addEvent(ev);
 			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(null, "Time format must be HH:MM", "Input Error", JOptionPane.INFORMATION_MESSAGE); //TODO: Doesn't execute
 				e.printStackTrace();
 			}
 		}

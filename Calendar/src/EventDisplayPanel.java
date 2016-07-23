@@ -74,7 +74,7 @@ public class EventDisplayPanel extends JPanel {
 	private void display(ArrayList<Event> eventList){
 		String disp="";
 		for(Event e : eventList){
-			disp+=e.getEventTitle() + "\t" + e.getStartTime() + "-" + e.getEndTime();
+			disp+=e.getEventTitle() + "\t" + e.getStartTime() + "-" + e.getEndTime()+"\n";
 		}
 		textArea.setText(disp);
 	}
