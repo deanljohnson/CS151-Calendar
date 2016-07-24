@@ -74,6 +74,7 @@ public class Calendar {
 		});
 		eventSelPanel.getAgendaButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				AgendaDialog.ShowDialog(calendar);
 				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Agenda);
 			}
 		});

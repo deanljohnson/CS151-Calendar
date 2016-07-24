@@ -77,8 +77,24 @@ public class CalendarWithEvents extends GregorianCalendar {
 		inFile.close();
 	}
 	
-	public ArrayList<Event> getEventsAgenda(){
-		return events;
+	public ArrayList<Event> getEventsAgenda(Date startDate, Date endDate){
+		ArrayList<Event> thisEvents = new ArrayList<Event>();
+		
+		Calendar clStart = Calendar.getInstance();
+		Calendar clEnd = Calendar.getInstance();
+		clStart.setTime(startDate);
+		clEnd.setTime(endDate);
+		clEnd.add(Calendar.DAY_OF_MONTH, 1);// +1 added to include the end date in the filter
+		for (Event e : events){
+			Calendar eventCl = Calendar.getInstance();
+			eventCl.set(e.getYear(), e.getMonth(), e.getDay());
+			
+			if(clStart.before(eventCl) && clEnd.after(eventCl)){
+				thisEvents.add(e);
+				
+			}
+		}
+		return thisEvents;
 	}
 	
 	public ArrayList<Event> getEventsThisMonth(){
