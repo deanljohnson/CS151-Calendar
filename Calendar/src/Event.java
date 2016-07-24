@@ -17,6 +17,13 @@ public class Event {
 		this.eventTitle = eventTitle;
 	}
 	
+	public boolean equals(Object otherObject){
+		Event other = (Event) otherObject;
+		return this.getEventTitle().equals(other.getEventTitle()) && this.getYear() == other.getYear()
+				&& this.getMonth() == other.getMonth() && this.getDay() == other.getDay() &&
+				this.getStartTime().equals(other.getStartTime()) && this.getEndTime().equals(other.getEndTime());
+	}
+	
 	public int getYear(){
 		return cal.get(Calendar.YEAR);
 	}

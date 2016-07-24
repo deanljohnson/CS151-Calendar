@@ -1,7 +1,10 @@
-import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 import javax.swing.event.ChangeEvent;
@@ -36,9 +39,18 @@ public class CalendarWithEvents extends GregorianCalendar {
 		notifyOfChange();
 	}
 	
-	public void loadEvent() throws IOException{
+	public void loadEvent() throws Exception{
 		Scanner inFile = new Scanner(Paths.get("events.txt"));
-		
+		SimpleDateFormat eDate = new SimpleDateFormat("MM/dd/yyyy");
+		while(inFile.hasNextLine()){
+			String[] line = inFile.nextLine().split(";");
+			System.out.println(Arrays.toString(line));
+			Date date = (Date) eDate.parse(line[0]);
+			LocalTime sTime = LocalTime.parse(line[1]);
+			LocalTime eTime = LocalTime.parse(line[2]);
+			Event aEvent = new Event(line[3], date, sTime, eTime);
+			if(!events.contains(aEvent)) events.add(aEvent);
+		}
 		inFile.close();
 	}
 	

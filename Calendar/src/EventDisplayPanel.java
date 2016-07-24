@@ -77,7 +77,7 @@ public class EventDisplayPanel extends JPanel {
 				calendar.loadEvent();
 				textArea.setText("File found! Events loaded.");
 			}catch(Exception e){
-				textArea.setText("File not found.");
+				textArea.setText("Error while loading file and events.");
 			}
 		}
 	}
