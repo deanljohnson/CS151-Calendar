@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -13,7 +12,7 @@ import javax.swing.event.ChangeListener;
 
 public class EventDisplayPanel extends JPanel {
 	public enum FilterType{
-		Day, Week, Month, Agenda
+		Day, Week, Month, Agenda, FromFile
 	}
 	
 	private CalendarWithEvents calendar;
@@ -73,6 +72,8 @@ public class EventDisplayPanel extends JPanel {
 		}else if (filter == FilterType.Agenda){
 			eventList = calendar.getEventsAgenda();
 			display(eventList);
+		}else if (filter == FilterType.FromFile){
+			System.out.println("ayy");
 		}
 	}
 	
@@ -99,7 +100,7 @@ public class EventDisplayPanel extends JPanel {
 							}
 							else return sTime;
 						}
-						else return month;
+						else return day;
 					}
 					else return month;
 				}
@@ -108,7 +109,9 @@ public class EventDisplayPanel extends JPanel {
 		});
 		String disp="";
 		for(Event e : eventList){
-			disp+=e.getEventTitle() + "\t" + e.getStartTime() + "-" + e.getEndTime()+"\n";
+			disp += (e.getMonth() + 1) + "/" + e.getDay() + "/" + e.getYear() + "\t"
+					+ e.getStartTime() + "-" + e.getEndTime()  + "\t" 
+					+ e.getEventTitle() + "\n";
 		}
 		textArea.setText(disp);
 	}

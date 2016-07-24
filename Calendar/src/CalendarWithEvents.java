@@ -1,7 +1,8 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+import java.util.Scanner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -32,6 +33,12 @@ public class CalendarWithEvents extends GregorianCalendar {
 			this.events.add(e);
 		
 		notifyOfChange();
+	}
+	
+	public void loadEvent() throws FileNotFoundException{
+		Scanner inFile = new Scanner("events.txt");
+		
+		inFile.close();
 	}
 	
 	public ArrayList<Event> getEventsAgenda(){

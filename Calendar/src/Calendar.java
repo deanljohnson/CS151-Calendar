@@ -77,6 +77,11 @@ public class Calendar {
 				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Agenda);
 			}
 		});
+		eventSelPanel.getFromFileButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				eventDisplay.setFilterType(EventDisplayPanel.FilterType.FromFile);
+			}
+		});
 		rightPanel.add(eventSelPanel);
 		rightPanel.add(eventDisplay);
 
