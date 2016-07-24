@@ -73,7 +73,12 @@ public class EventDisplayPanel extends JPanel {
 			eventList = calendar.getEventsAgenda();
 			display(eventList);
 		}else if (filter == FilterType.FromFile){
-			System.out.println("ayy");
+			try{
+				calendar.loadEvent();
+				textArea.setText("File found! Events loaded.");
+			}catch(Exception e){
+				textArea.setText("File not found.");
+			}
 		}
 	}
 	

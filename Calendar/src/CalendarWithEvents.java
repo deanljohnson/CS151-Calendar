@@ -1,4 +1,5 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -35,8 +36,8 @@ public class CalendarWithEvents extends GregorianCalendar {
 		notifyOfChange();
 	}
 	
-	public void loadEvent() throws FileNotFoundException{
-		Scanner inFile = new Scanner("events.txt");
+	public void loadEvent() throws IOException{
+		Scanner inFile = new Scanner(Paths.get("events.txt"));
 		
 		inFile.close();
 	}
