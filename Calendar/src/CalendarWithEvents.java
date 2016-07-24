@@ -39,15 +39,27 @@ public class CalendarWithEvents extends GregorianCalendar {
 	}
 	
 	public void loadEvent() throws Exception{
-		Scanner inFile = new Scanner(Paths.get("events.txt"));
-		SimpleDateFormat eDate = new SimpleDateFormat("MM/dd/yyyy");
+		Scanner inFile = new Scanner(Paths.get("input.txt"));
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		while(inFile.hasNextLine()){
 			String[] line = inFile.nextLine().split(";");
-			Date date = (Date) eDate.parse(line[0]);
-			LocalTime sTime = LocalTime.parse(line[1]);
-			LocalTime eTime = LocalTime.parse(line[2]);
-			Event aEvent = new Event(line[3], date, sTime, eTime);
-			if(!events.contains(aEvent)) events.add(aEvent);
+			String evTitle = line[0];
+			Date sdate = (Date) dateFormat.parse(line[2]+"/"+"1"+"/"+line[1]);
+
+			GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(line[1]),Integer.parseInt(line[3]),1);
+			Date edate = (Date) dateFormat.parse(line[3]+"/"+gc.getActualMaximum(Calendar.DAY_OF_MONTH)+"/"+line[1]); //TODO: August should have 31 days
+			
+			LocalTime sTime = LocalTime.parse(line[5]+":00");
+			LocalTime eTime = LocalTime.parse(line[6]+":00");
+	
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(sdate);
+
+			while(cal.getTime().before(edate)){
+				Event aEvent = new Event(evTitle, (Date) cal.getTime(), sTime, eTime);
+				if(!events.contains(aEvent)) events.add(aEvent);
+				cal.add(Calendar.DAY_OF_MONTH,1);
+			}
 		}
 		inFile.close();
 	}

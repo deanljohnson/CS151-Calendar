@@ -35,13 +35,32 @@ public class CreateEventDialog {
 
 			try {
 				Date date = (Date) eDate.parse(dateField.getText());
-				LocalTime sTime = LocalTime.parse(sTimeField.getText());
-				LocalTime eTime = LocalTime.parse(eTimeField.getText());
-				
+				LocalTime sTime;
+				LocalTime eTime;
+				if(Integer.parseInt(sTimeField.getText()) < 10 && Integer.parseInt(eTimeField.getText())<10){
+					sTime = LocalTime.parse("0"+sTimeField.getText()+":00");
+					eTime = LocalTime.parse("0"+eTimeField.getText()+":00");
+					Event ev = new Event(eTitle, date, sTime, eTime);
+					cal.addEvent(ev);
+				}else if(Integer.parseInt(sTimeField.getText()) < 10){
+					sTime = LocalTime.parse("0"+sTimeField.getText()+":00");
+					eTime = LocalTime.parse(eTimeField.getText()+":00");
+					Event ev = new Event(eTitle, date, sTime, eTime);
+					cal.addEvent(ev);
+//				}else if(Integer.parseInt(eTimeField.getText()) < 10){
+//					sTime = LocalTime.parse(sTimeField.getText()+":00");
+//					eTime = LocalTime.parse("0"+eTimeField.getText()+":00");
+//					Event ev = new Event(eTitle, date, sTime, eTime);
+//					cal.addEvent(ev);
+				}else{
+					sTime = LocalTime.parse(sTimeField.getText()+":00");
+					eTime = LocalTime.parse(eTimeField.getText()+":00");
 				Event ev = new Event(eTitle, date, sTime, eTime);
 				cal.addEvent(ev);
+				}
+				
 			} catch (DateTimeParseException | ParseException e) {
-				JOptionPane.showMessageDialog(null, "Time format must be HH:MM", "Input Error", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Time format must be HH", "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			}
