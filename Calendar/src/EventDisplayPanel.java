@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
@@ -75,9 +76,13 @@ public class EventDisplayPanel extends JPanel {
 		}else if (filter == FilterType.FromFile){
 			try{
 				calendar.loadEvent();
-				textArea.setText("File found! Events loaded.");
+				JOptionPane.showMessageDialog(null, "File found and Events loaded.\n"
+						+ "Click Day, Week, Month, Agenda to view loaded events.", 
+						"Success", JOptionPane.INFORMATION_MESSAGE);
 			}catch(Exception e){
-				textArea.setText("Error while loading file and events.");
+				JOptionPane.showMessageDialog(null, "Error found while loading file and events.\n"
+						+ "Try examining events.txt file and fix errors.", "Input Error",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}

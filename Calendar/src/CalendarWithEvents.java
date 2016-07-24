@@ -2,7 +2,6 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -44,7 +43,6 @@ public class CalendarWithEvents extends GregorianCalendar {
 		SimpleDateFormat eDate = new SimpleDateFormat("MM/dd/yyyy");
 		while(inFile.hasNextLine()){
 			String[] line = inFile.nextLine().split(";");
-			System.out.println(Arrays.toString(line));
 			Date date = (Date) eDate.parse(line[0]);
 			LocalTime sTime = LocalTime.parse(line[1]);
 			LocalTime eTime = LocalTime.parse(line[2]);
