@@ -1,7 +1,9 @@
+import java.io.PrintStream;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -12,7 +14,7 @@ import javax.swing.event.ChangeListener;
 public class CalendarWithEvents extends GregorianCalendar {
 	private ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
 	private ArrayList<Event> events = new ArrayList<Event>();
-	
+	DAYS[] arrayOfDays = DAYS.values();
 	public CalendarWithEvents(){	
 	}
 	
@@ -45,20 +47,31 @@ public class CalendarWithEvents extends GregorianCalendar {
 			String[] line = inFile.nextLine().split(";");
 			String evTitle = line[0];
 			Date sdate = (Date) dateFormat.parse(line[2]+"/"+"1"+"/"+line[1]);
-
-			GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(line[1]),Integer.parseInt(line[3]),1);
-			Date edate = (Date) dateFormat.parse(line[3]+"/"+gc.getActualMaximum(Calendar.DAY_OF_MONTH)+"/"+line[1]); //TODO: August should have 31 days
 			
+			//Event recurring days
+			String days = line[4];
+			String[] eventDays = days.split("");
+			eventDays = transform(eventDays);
+			
+			//Create end date
+			GregorianCalendar gc = new GregorianCalendar(Integer.parseInt(line[1]),Integer.parseInt(line[3]),1);
+			Date edate = (Date) dateFormat.parse(line[3]+"/"+gc.getActualMaximum(Calendar.DAY_OF_MONTH)+"/"+line[1]);
+			
+			//Event start and end time
 			LocalTime sTime = LocalTime.parse(line[5]+":00");
 			LocalTime eTime = LocalTime.parse(line[6]+":00");
 	
+			//Convert Date to Calendar so Calendar.add method can be used to increment days
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(sdate);
-
 			while(cal.getTime().before(edate)){
-				Event aEvent = new Event(evTitle, (Date) cal.getTime(), sTime, eTime);
-				if(!events.contains(aEvent)) events.add(aEvent);
-				cal.add(Calendar.DAY_OF_MONTH,1);
+				if(Arrays.asList(eventDays).contains(arrayOfDays[cal.get(Calendar.DAY_OF_WEEK)-1].toString())){
+					Event aEvent = new Event(evTitle, (Date) cal.getTime(), sTime, eTime);
+					if(!events.contains(aEvent)) events.add(aEvent);
+					cal.add(Calendar.DAY_OF_MONTH,1);
+				}else{
+					cal.add(Calendar.DAY_OF_MONTH,1);
+				}
 			}
 		}
 		inFile.close();
@@ -118,4 +131,25 @@ public class CalendarWithEvents extends GregorianCalendar {
 		for (ChangeListener l : changeListeners)
 			l.stateChanged(ce);
 	}
+	
+	private String[] transform(String[] arr){ 	
+		for(int i=0; i<arr.length;i++){
+				if (arr[i].equals("M")){
+					arr[i] = "Monday";
+				}else if (arr[i].equals("T")){
+					arr[i] = "Tuesday";
+				}else if (arr[i].equals("W")){
+					arr[i] = "Wednesday";
+				}else if (arr[i].equals("Th")){
+					arr[i] = "Thursday";
+				}else if (arr[i].equals("F")){
+					arr[i] = "Friday";
+				}else if (arr[i].equals("S")){
+					arr[i] = "Saturday";
+				}else if (arr[i].equals("Su")){
+					arr[i] = "Sunday";
+				}
+			}
+		 return arr;
+	 }
 }
