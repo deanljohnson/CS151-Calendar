@@ -35,35 +35,49 @@ public class CreateEventDialog {
 
 			try {
 				Date date = (Date) eDate.parse(dateField.getText());
-				LocalTime sTime;
-				LocalTime eTime;
-				if(Integer.parseInt(sTimeField.getText()) < 10 && Integer.parseInt(eTimeField.getText())<10){
-					sTime = LocalTime.parse("0"+sTimeField.getText()+":00");
-					eTime = LocalTime.parse("0"+eTimeField.getText()+":00");
-					Event ev = new Event(eTitle, date, sTime, eTime);
-					cal.addEvent(ev);
-				}else if(Integer.parseInt(sTimeField.getText()) < 10){
-					sTime = LocalTime.parse("0"+sTimeField.getText()+":00");
-					eTime = LocalTime.parse(eTimeField.getText()+":00");
-					Event ev = new Event(eTitle, date, sTime, eTime);
-					cal.addEvent(ev);
-//				}else if(Integer.parseInt(eTimeField.getText()) < 10){
-//					sTime = LocalTime.parse(sTimeField.getText()+":00");
-//					eTime = LocalTime.parse("0"+eTimeField.getText()+":00");
-//					Event ev = new Event(eTitle, date, sTime, eTime);
-//					cal.addEvent(ev);
-				}else{
-					sTime = LocalTime.parse(sTimeField.getText()+":00");
-					eTime = LocalTime.parse(eTimeField.getText()+":00");
+				LocalTime sTime = parseTime(sTimeField.getText());
+				LocalTime eTime = parseTime(eTimeField.getText());
+				
 				Event ev = new Event(eTitle, date, sTime, eTime);
 				cal.addEvent(ev);
-				}
-				
 			} catch (DateTimeParseException | ParseException e) {
 				JOptionPane.showMessageDialog(null, "Time format must be HH", "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
+	}
+	
+	private static LocalTime parseTime(String s) throws Exception{
+		boolean am = s.endsWith("am") || s.endsWith("AM");
+		boolean pm = s.endsWith("pm") || s.endsWith("PM");
+		int hour = 0, min = 0;
+		
+		if (am && pm)
+			throw new Exception("Cannot parse " + s + " as a time.");
+		if (am)
+		{
+			s = s.replaceAll("am", "");
+			s = s.replaceAll("AM", "");
+		}
+		if (pm)
+		{
+			s = s.replaceAll("pm", "");
+			s = s.replaceAll("PM", "");
+		}
+		
+		if (s.contains(":")){
+			String[] tokens = s.split(":");
+			hour = Integer.parseInt(tokens[0]);
+			min = Integer.parseInt(tokens[1]);
+		}
+		else{
+			hour = Integer.parseInt(s);
+			min = 0;
+		}
+		
+		if (pm && hour < 12) hour += 12;
+		
+		return LocalTime.of(hour, min);
 	}
 }
