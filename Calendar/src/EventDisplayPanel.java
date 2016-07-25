@@ -21,15 +21,11 @@ public class EventDisplayPanel extends JPanel {
 	private int width;
 	private int height;
 	private JPanel eventView;
-	//private JTextArea textArea;
 	
 	public EventDisplayPanel(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		
 		eventView = new DayEventsView(cal.getEventsToday(), w, h);
-		
-		/*textArea = new JTextArea();
-		textArea.setEditable(false);*/
 		
 		setLayout(new BorderLayout());
 		add(eventView, BorderLayout.CENTER);
