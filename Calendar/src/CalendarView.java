@@ -10,6 +10,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 enum MONTHS{
 	January, February, March, April, May, June, July, August, September, October, November, December;
@@ -19,16 +21,18 @@ enum DAYS{
 }
 
 public class CalendarView extends JPanel {
+	private IButtonColoringStrategy colorStrat;
 	private CalendarWithEvents cal;
 	private int width;
 	private int height;
-	JLabel currentMonth;
-	DAYS[] arrayOfDays = DAYS.values();
-	MONTHS[] arrayOfMonths = MONTHS.values();
-	JButton selectedButton; // saved selected button
+	private JLabel currentMonth;
+	private DAYS[] arrayOfDays = DAYS.values();
+	private MONTHS[] arrayOfMonths = MONTHS.values();
+	private JButton selectedButton; // saved selected button
 	int selectedDate; // track selected date & probably need to change to Date type or Calendar
 	
-	public CalendarView(CalendarWithEvents calendar, int w, int h){
+	public CalendarView(CalendarWithEvents calendar, int w, int h, IButtonColoringStrategy colorStrat){
+		this.colorStrat = colorStrat;
 		cal = calendar;
 		selectedDate = cal.get(Calendar.DAY_OF_MONTH); // initialize date to highlight button
 		
@@ -49,18 +53,29 @@ public class CalendarView extends JPanel {
 		
 		add(drawCal(cal));
 		
+		cal.addEventListener(new ChangeListener(){
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				refreshCalendar();
+			}
+		});
+	}
+	
+	public CalendarView(CalendarWithEvents calendar, int w, int h){
+		this(calendar, w, h, new DefaultColoringStrategy());
 	}
 	
 	// erase previous button background and select new button
 	public void select(JButton b, int d){
 		// if there are button has been selected, set background to null
 		if(selectedButton != null){
-			selectedButton.setBackground(null);
+			colorStrat.color(selectedButton, selectedDate, cal, false);
 		}
 		
 		selectedButton = b;
-		selectedButton.setBackground(Color.CYAN);
 		selectedDate = d; // update selected day
+		colorStrat.color(selectedButton, selectedDate, cal, true);
+		
 	}
 	
 	public void moveToToday(){
@@ -145,6 +160,12 @@ public class CalendarView extends JPanel {
 				}
 			});
 			
+			boolean selected = (day == selectedDate) || (selectedDate > c.getActualMaximum(Calendar.DAY_OF_MONTH) &&
+					day == c.getActualMaximum(Calendar.DAY_OF_MONTH));
+			colorStrat.color(dayButton, day, cal, selected);
+			if (selected)
+				selectedButton = dayButton;
+			/*
 			// highlight today's date button
 			if(day == selectedDate){
 				select(dayButton, day);
@@ -154,7 +175,7 @@ public class CalendarView extends JPanel {
 			if(selectedDate > c.getActualMaximum(Calendar.DAY_OF_MONTH) &&
 					day == c.getActualMaximum(Calendar.DAY_OF_MONTH)){
 				select(dayButton, day);
-			}
+			}*/
 		}
 		
 		//Add dummy buttons for days at the end of the month

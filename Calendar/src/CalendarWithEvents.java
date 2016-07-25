@@ -13,13 +13,19 @@ import javax.swing.event.ChangeListener;
 
 public class CalendarWithEvents extends GregorianCalendar {
 	private ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
+	private ArrayList<ChangeListener> eventListeners = new ArrayList<ChangeListener>();
 	private ArrayList<Event> events = new ArrayList<Event>();
-	DAYS[] arrayOfDays = DAYS.values();
+	private DAYS[] arrayOfDays = DAYS.values();
+	
 	public CalendarWithEvents(){	
 	}
 	
 	public void addChangeListener(ChangeListener l){
 		changeListeners.add(l);
+	}
+	
+	public void addEventListener(ChangeListener l){
+		eventListeners.add(l);
 	}
 	
 	@Override
@@ -31,6 +37,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 	public void addEvent(Event event){
 		events.add(event);
 		notifyOfChange();
+		notifyOfEventChange();
 	}
 	
 	public void addEvents(ArrayList<Event> events){
@@ -38,6 +45,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 			this.events.add(e);
 		
 		notifyOfChange();
+		notifyOfEventChange();
 	}
 	
 	public void loadEvent() throws Exception{
@@ -142,9 +150,30 @@ public class CalendarWithEvents extends GregorianCalendar {
 		return dayEvents;
 	}
 	
+	public ArrayList<Event> getEventsOnDate(int day, int month, int year){
+		ArrayList<Event> dateEvents = new ArrayList<Event>();
+		
+		for (Event e : events){
+			if (month == e.getMonth()
+				&& year == e.getYear()
+				&& day == e.getDay())
+			{
+				dateEvents.add(e);
+			}
+		}
+		
+		return dateEvents;
+	}
+	
 	private void notifyOfChange(){
 		ChangeEvent ce = new ChangeEvent(this);
 		for (ChangeListener l : changeListeners)
+			l.stateChanged(ce);
+	}
+	
+	private void notifyOfEventChange(){
+		ChangeEvent ce = new ChangeEvent(this);
+		for (ChangeListener l : eventListeners)
 			l.stateChanged(ce);
 	}
 	
