@@ -36,6 +36,10 @@ public class Event {
 		return cal.get(Calendar.DAY_OF_MONTH);
 	}
 	
+	public int getDayOfWeek(){
+		return cal.get(Calendar.DAY_OF_WEEK);
+	}
+	
 	public LocalTime getStartTime(){
 		return this.startTime;
 	}
