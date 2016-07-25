@@ -20,16 +20,19 @@ public class EventDisplayPanel extends JPanel {
 	private FilterType filter = FilterType.Day;
 	private int width;
 	private int height;
-	private JTextArea textArea;
+	private JPanel eventView;
+	//private JTextArea textArea;
 	
 	public EventDisplayPanel(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		
-		textArea = new JTextArea();
-		textArea.setEditable(false);
+		eventView = new DayEventsView(cal.getEventsToday(), w, h);
+		
+		/*textArea = new JTextArea();
+		textArea.setEditable(false);*/
 		
 		setLayout(new BorderLayout());
-		add(textArea, BorderLayout.CENTER);
+		add(eventView, BorderLayout.CENTER);
 		
 		calendar.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e) {
@@ -61,61 +64,30 @@ public class EventDisplayPanel extends JPanel {
 		//the agenda view
 		
 		ArrayList<Event> eventList = new ArrayList<Event>();
+		removeAll();
 		if (filter == FilterType.Day){
 			eventList = calendar.getEventsToday();
-			display(eventList);
+			eventView = new DayEventsView(eventList, width, height);
 		}else if (filter == FilterType.Week){
 			eventList = calendar.getEventsThisWeek();
-			display(eventList);
+			//TODO : Create and use a WeekEventsView here
+			eventView = new DayEventsView(eventList, width, height);
 		}else if (filter == FilterType.Month){
 			eventList = calendar.getEventsThisMonth();
-			display(eventList);
+			//TODO : Create and use a MonthEventsView here
+			eventView = new DayEventsView(eventList, width, height);
 		}else if (filter == FilterType.Agenda){
 			try{
+				//TODO : Create and use a AgendaEventsView here
 				eventList = calendar.getEventsAgenda(AgendaDialog.getStartDate(),AgendaDialog.getEndDate());
-				display(eventList);
+				eventView = new DayEventsView(eventList, width, height);
 			}catch (Exception e){
 				
 			}
 		}
-	}
-	
-	private void display(ArrayList<Event> eventList){
-		// display sorted events
-		Collections.sort(eventList, new Comparator<Event>(){
-			@Override
-			public int compare(Event e1, Event e2) {
-				int year = e1.getYear() - e2.getYear();
-				int month = e1.getMonth() - e2.getMonth();
-				int day = e1.getDay() - e2.getDay();
-				int sTime = e1.getStartTime().compareTo(e2.getStartTime());
-				int eTime = e1.getEndTime().compareTo(e2.getEndTime());
-				int title = e1.getEventTitle().compareTo(e2.getEventTitle());
-				
-				if(year == 0){
-					if(month == 0){
-						if(day == 0){
-							if(sTime == 0){
-								if(eTime == 0){
-									return title;
-								}
-								else return eTime;
-							}
-							else return sTime;
-						}
-						else return day;
-					}
-					else return month;
-				}
-				else return year;
-			}
-		});
-		String disp="";
-		for(Event e : eventList){
-			disp += (e.getMonth() + 1) + "/" + e.getDay() + "/" + e.getYear() + "\t"
-					+ e.getStartTime() + "-" + e.getEndTime()  + "\t" 
-					+ e.getEventTitle() + "\n";
-		}
-		textArea.setText(disp);
+		
+		add(eventView, BorderLayout.CENTER);
+		revalidate();
+		repaint();
 	}
 }
