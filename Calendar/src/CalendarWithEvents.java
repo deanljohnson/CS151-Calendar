@@ -1,4 +1,3 @@
-import java.io.PrintStream;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
@@ -83,6 +82,8 @@ public class CalendarWithEvents extends GregorianCalendar {
 			}
 		}
 		inFile.close();
+		
+		notifyOfEventChange();
 	}
 	
 	public ArrayList<Event> getEventsAgenda(Date startDate, Date endDate){

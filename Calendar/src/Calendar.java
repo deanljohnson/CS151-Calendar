@@ -1,10 +1,10 @@
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Calendar {
@@ -80,7 +80,16 @@ public class Calendar {
 		});
 		eventSelPanel.getFromFileButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				eventDisplay.setFilterType(EventDisplayPanel.FilterType.FromFile);
+				try{
+					calendar.loadEvent();
+					JOptionPane.showMessageDialog(null, "File found and Events loaded.\n"
+							+ "Click Day, Week, Month, Agenda to view loaded events.", 
+							"Success", JOptionPane.INFORMATION_MESSAGE);
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, "Error found while loading file and events.\n"
+							+ "Try examining events.txt file and fix errors.", "Input Error",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		rightPanel.add(eventSelPanel);

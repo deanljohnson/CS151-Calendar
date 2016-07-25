@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 
 public class EventDisplayPanel extends JPanel {
 	public enum FilterType{
-		Day, Week, Month, Agenda, FromFile
+		Day, Week, Month, Agenda
 	}
 	
 	private CalendarWithEvents calendar;
@@ -76,17 +76,6 @@ public class EventDisplayPanel extends JPanel {
 				display(eventList);
 			}catch (Exception e){
 				
-			}
-		}else if (filter == FilterType.FromFile){
-			try{
-				calendar.loadEvent();
-				JOptionPane.showMessageDialog(null, "File found and Events loaded.\n"
-						+ "Click Day, Week, Month, Agenda to view loaded events.", 
-						"Success", JOptionPane.INFORMATION_MESSAGE);
-			}catch(Exception e){
-				JOptionPane.showMessageDialog(null, "Error found while loading file and events.\n"
-						+ "Try examining events.txt file and fix errors.", "Input Error",
-						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 	}
