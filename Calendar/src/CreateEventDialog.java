@@ -39,6 +39,10 @@ public class CreateEventDialog {
 				LocalTime eTime = parseTime(eTimeField.getText());
 				
 				Event ev = new Event(eTitle, date, sTime, eTime);
+				
+				if (overlappingEvent(cal, ev))
+					throw new Exception("The given event overlaps with an already existing event.");
+				
 				cal.addEvent(ev);
 			} catch (DateTimeParseException | ParseException e) {
 				JOptionPane.showMessageDialog(null, "Time format must be HH", "Input Error", JOptionPane.INFORMATION_MESSAGE);
@@ -79,5 +83,15 @@ public class CreateEventDialog {
 		if (pm && hour < 12) hour += 12;
 		
 		return LocalTime.of(hour, min);
+	}
+	
+	private static boolean overlappingEvent(CalendarWithEvents cal, Event ev){
+		Calendar clStart = Calendar.getInstance();
+		clStart.set(ev.getYear(), ev.getMonth(), ev.getDay(), ev.getStartTime().getHour(), ev.getStartTime().getMinute());
+		
+		Calendar clEnd = Calendar.getInstance();
+		clEnd.set(ev.getYear(), ev.getMonth(), ev.getDay(), ev.getEndTime().getHour(), ev.getEndTime().getMinute());
+		
+		return cal.getEventsAgenda(clStart, clEnd).size() > 0;
 	}
 }
