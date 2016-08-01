@@ -108,7 +108,11 @@ public class CalendarWithEvents extends GregorianCalendar {
 			endEventCal.set(e.getYear(), e.getMonth(), e.getDay(), e.getEndTime().getHour(), e.getEndTime().getMinute());
 			
 			if((clStart.before(startEventCal) && clEnd.after(startEventCal))
-					|| (clStart.before(endEventCal) && clEnd.after(endEventCal))){
+					|| (clStart.before(endEventCal) && clEnd.after(endEventCal))
+					|| (startEventCal.before(clStart) && endEventCal.after(clStart))
+					|| (endEventCal.before(clEnd) && endEventCal.after(clEnd))
+					|| clStart.compareTo(startEventCal) == 0
+					|| clEnd.compareTo(endEventCal) == 0) {
 				thisEvents.add(e);
 			}
 		}
