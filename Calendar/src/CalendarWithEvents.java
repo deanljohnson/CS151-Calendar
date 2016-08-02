@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -34,10 +36,10 @@ public class CalendarWithEvents extends GregorianCalendar {
 	}
 	
 	public void addEvent(Event event){
-		events.add(event);
-		notifyOfChange();
-		notifyOfEventChange();
-	}
+				events.add(event);
+				notifyOfChange();
+				notifyOfEventChange();
+			}
 	
 	public void addEvents(ArrayList<Event> events){
 		for (Event e : events)

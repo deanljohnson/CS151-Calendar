@@ -34,7 +34,7 @@ public class AgendaDialog {
 				eDate = (Date) date.parse(eDateField.getText());
 					
 			} catch (DateTimeParseException | ParseException e) {
-				JOptionPane.showMessageDialog(null, "Time format must be HH", "Input Error", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Date format must be MM/DD/YYY", "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			}
