@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -50,13 +51,16 @@ public class MonthEventView extends JPanel{
 			emptyAreas.setBorder(BorderFactory.createBevelBorder(1));
 			emptyAreas.setEditable(false);
 			add(emptyAreas);
+			cl.set(Calendar.DAY_OF_MONTH, j);
 		}
+		
 		for (int i=1; i<=cl.getActualMaximum(Calendar.DAY_OF_MONTH); i++, boxesAdded++){
 			JTextArea textArea = new JTextArea();
 			textArea.setEditable(false);
 			textArea.setBorder(BorderFactory.createBevelBorder(1));
-			textArea.setText(""+i);
-//TODO:		textArea.setText(events.get(i).toString());
+			
+			cl.set(Calendar.DAY_OF_MONTH, i);
+			textArea.setText(""+i+"\n"+Event.toStringEvent(c.getEventsOnDate(cl.get(Calendar.DAY_OF_MONTH), cl.get(Calendar.MONTH), cl.get(Calendar.YEAR))));
 			
 			add(textArea);
 		}

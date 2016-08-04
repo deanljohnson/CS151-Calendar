@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Event {
@@ -50,5 +51,14 @@ public class Event {
 	
 	public String getEventTitle(){
 		return this.eventTitle;
+	}
+	
+	public static String toStringEvent(ArrayList<Event> events){
+		String str = "";
+		for (Event e: events){
+			str += e.getEventTitle()+"\n";
+		}
+		
+		return str;
 	}
 }
