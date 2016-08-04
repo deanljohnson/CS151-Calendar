@@ -69,8 +69,7 @@ public class EventDisplayPanel extends JPanel {
 			eventView = new WeekEventsView(eventList, width, height);
 		}else if (filter == FilterType.Month){
 			eventList = calendar.getEventsThisMonth();
-			//TODO : Create and use a MonthEventsView here
-			eventView = new DayEventsView(eventList, width, height);
+			eventView = new MonthEventView(calendar,eventList, width, height);
 		}else if (filter == FilterType.Agenda){
 			try{
 				//TODO : Create and use a AgendaEventsView here

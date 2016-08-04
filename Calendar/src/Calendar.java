@@ -87,7 +87,7 @@ public class Calendar {
 							"Success", JOptionPane.INFORMATION_MESSAGE);
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, "Error found while loading file and events.\n"
-							+ "Try examining events.txt file and fix errors.", "Input Error",
+							+ "Try examining input.txt file and fix errors.", "Input Error",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
