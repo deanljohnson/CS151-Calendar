@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -177,7 +178,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 				dateEvents.add(e);
 			}
 		}
-		
+		Collections.sort(dateEvents, new EventComparator());
 		return dateEvents;
 	}
 	
