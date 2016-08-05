@@ -6,6 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * Agenda view panel which displays events between certain date
+ * @author Three Amigos
+ */
+
 public class AgendaEventsView extends JPanel{
 	private DAYS[] arrayOfDays = DAYS.values();
 	private MONTHS[] arrayOfMonths = MONTHS.values();
@@ -22,7 +27,11 @@ public class AgendaEventsView extends JPanel{
 		add(scrollPane, BorderLayout.CENTER);
 		
 	}
-
+	/**
+	 * display events from select dates
+	 * @param eventList
+	 * @param textArea
+	 */
 	private void display(ArrayList<Event> eventList, JTextArea textArea){
 		// display sorted events
 		Collections.sort(eventList, new EventComparator());

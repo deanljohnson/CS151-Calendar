@@ -32,7 +32,7 @@ public class AgendaDialog {
 			try {
 				sDate = (Date) date.parse(sDateField.getText());
 				eDate = (Date) date.parse(eDateField.getText());
-					
+				if(eDate.before(sDate)) throw new Exception("End date has to be after start date.");
 			} catch (DateTimeParseException | ParseException e) {
 				JOptionPane.showMessageDialog(null, "Date format must be MM/DD/YYY", "Input Error", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e){

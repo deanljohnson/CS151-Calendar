@@ -8,13 +8,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
+ * Main class for calendar where set up main frame and construct other panels.
  * @author Three Amigos
  */
 
 public class Calendar {
 	private static final int WIDTH = 1400;
 	private static final int HEIGHT = 800;
-	
+	/**
+	 * set up main frame and other panels
+	 * @param args
+	 */
 	public static void main(String[] args){
 		CalendarWithEvents calendar = new CalendarWithEvents();
 		
