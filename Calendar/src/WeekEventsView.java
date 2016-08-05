@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -19,7 +20,7 @@ public class WeekEventsView extends JPanel {
 		for (int i = 0; i < 7; i++){
 			dayAreas.add(new JTextArea());
 			dayAreas.get(i).setEditable(false);
-			
+			dayAreas.get(i).setBorder(BorderFactory.createSoftBevelBorder(1));
 			String disp=arrayOfDays[i].toString() + "\n\n";
 			
 			for (; eventIndex < events.size() 

@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
 
 public class MonthEventView extends JPanel{
 	private DAYS[] arrayOfDays = DAYS.values();
-	public MonthEventView(CalendarWithEvents c, ArrayList<Event> events, int w, int h){
+	public MonthEventView(CalendarWithEvents c, int w, int h){
 
 		//Maintain the dimension
 		setPreferredSize(new Dimension(w,h));

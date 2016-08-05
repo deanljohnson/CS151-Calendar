@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class AgendaEventsView extends JPanel{
@@ -15,9 +16,10 @@ public class AgendaEventsView extends JPanel{
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
+		JScrollPane scrollPane = new JScrollPane(textArea);
 		display(events, textArea);
 		setLayout(new BorderLayout());
-		add(textArea, BorderLayout.CENTER);
+		add(scrollPane, BorderLayout.CENTER);
 		
 	}
 
