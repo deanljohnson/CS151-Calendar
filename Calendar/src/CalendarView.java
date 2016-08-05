@@ -20,6 +20,11 @@ enum DAYS{
 	Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
 }
 
+/**
+ * Viewer for displaying current month with dates as buttons to select and show events in event display panel.
+ * @author Three Amigos
+ */
+
 public class CalendarView extends JPanel {
 	private IButtonColoringStrategy colorStrat;
 	private CalendarWithEvents cal;
@@ -30,7 +35,13 @@ public class CalendarView extends JPanel {
 	private MONTHS[] arrayOfMonths = MONTHS.values();
 	private JButton selectedButton; // saved selected button
 	int selectedDate; // track selected date & probably need to change to Date type or Calendar
-	
+	/**
+	 * constructor
+	 * @param calendar: CalendarWithEvents
+	 * @param w: width
+	 * @param h: height
+	 * @param colorStrat: color strategy
+	 */
 	public CalendarView(CalendarWithEvents calendar, int w, int h, IButtonColoringStrategy colorStrat){
 		this.colorStrat = colorStrat;
 		cal = calendar;
@@ -60,12 +71,20 @@ public class CalendarView extends JPanel {
 			}
 		});
 	}
-	
+	/**
+	 * constructor with default coloring strategy
+	 * @param calendar: CalendarWithEvents
+	 * @param w: width
+	 * @param h: height
+	 */
 	public CalendarView(CalendarWithEvents calendar, int w, int h){
 		this(calendar, w, h, new DefaultColoringStrategy());
 	}
-	
-	// erase previous button background and select new button
+	/**
+	 * erase previous button background and select new button
+	 * @param b: selected button
+	 * @param d: selected date
+	 */
 	public void select(JButton b, int d){
 		// if there are button has been selected, set background to null
 		if(selectedButton != null){
@@ -76,30 +95,42 @@ public class CalendarView extends JPanel {
 		selectedDate = d; // update selected day
 		colorStrat.color(selectedButton, selectedDate, cal, true);
 	}
-	
+	/**
+	 * jump to today's date and button
+	 */
 	public void moveToToday(){
 		cal.setTime(Calendar.getInstance().getTime());
 		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
 		refreshCalendar();
 	}
-	
+	/**
+	 * move to previous month
+	 */
 	public void moveToPrevMonth(){
 		cal.add(Calendar.MONTH, -1);
 		refreshCalendar();
 	}
-	
+	/**
+	 * move to next month
+	 */
 	public void moveToNextMonth(){
 		cal.add(Calendar.MONTH, 1);
 		refreshCalendar();
 	}
-	
+	/**
+	 * re-draw calendar
+	 */
 	private void refreshCalendar(){
 		currentMonth.setText(arrayOfMonths[cal.get(Calendar.MONTH)].toString()+", "+cal.get(Calendar.YEAR));
 		repaint();
 		remove(1);
 		add(drawCal(cal));
 	}
-	
+	/**
+	 * draw calendar
+	 * @param c: Calendar
+	 * @return fixed calendar panel
+	 */
 	private JPanel drawCal(Calendar c){
 		int initialDay = c.get(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.DAY_OF_MONTH, 1);
@@ -158,17 +189,6 @@ public class CalendarView extends JPanel {
 			colorStrat.color(dayButton, day, cal, selected);
 			if (selected)
 				selectedButton = dayButton;
-			/*
-			// highlight today's date button
-			if(day == selectedDate){
-				select(dayButton, day);
-			}
-			// when change month in calendar view if selected date is out of range
-			// set the selected button and date to the maximum date
-			if(selectedDate > c.getActualMaximum(Calendar.DAY_OF_MONTH) &&
-					day == c.getActualMaximum(Calendar.DAY_OF_MONTH)){
-				select(dayButton, day);
-			}*/
 		}
 		
 		//Add dummy buttons for days at the end of the month

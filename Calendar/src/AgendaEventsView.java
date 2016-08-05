@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
- * Agenda view panel which displays events between certain date
+ * Agenda view panel which displays events between certain dates.
  * @author Three Amigos
  */
 

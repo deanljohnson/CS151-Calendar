@@ -17,7 +17,7 @@ public class Calendar {
 	private static final int HEIGHT = 800;
 	/**
 	 * set up main frame and other panels
-	 * @param args
+	 * @param args: args
 	 */
 	public static void main(String[] args){
 		CalendarWithEvents calendar = new CalendarWithEvents();

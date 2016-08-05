@@ -9,7 +9,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Dialog pops up to take user input and create events on selected date.
+ * @author Three Amigos
+ */
+
 public class CreateEventDialog {
+	/**
+	 * create dialog
+	 * @param cal: CalendarWithEvents
+	 */
 	public static void ShowDialog(CalendarWithEvents cal){
 		JTextField titleField = new JTextField(20);
 		JTextField dateField = new JTextField(10);

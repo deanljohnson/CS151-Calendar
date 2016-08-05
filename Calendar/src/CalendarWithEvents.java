@@ -13,43 +13,67 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Model of this project, which handles events, receives changes from controller and notifies viewer.
+ * @author Three Amigos
+ */
+
 public class CalendarWithEvents extends GregorianCalendar {
-	private ArrayList<ChangeListener> changeListeners = new ArrayList<ChangeListener>();
-	private ArrayList<ChangeListener> eventListeners = new ArrayList<ChangeListener>();
-	private ArrayList<Event> events = new ArrayList<Event>();
-	private DAYS[] arrayOfDays = DAYS.values();
-	
-	public CalendarWithEvents(){	
+	private ArrayList<ChangeListener> changeListeners;
+	private ArrayList<ChangeListener> eventListeners;
+	private ArrayList<Event> events;
+	private DAYS[] arrayOfDays;
+	/**
+	 * constructor
+	 */
+	public CalendarWithEvents(){
+		changeListeners = new ArrayList<ChangeListener>();
+		eventListeners = new ArrayList<ChangeListener>();
+		events = new ArrayList<Event>();
+		arrayOfDays = DAYS.values();
 	}
-	
+	/**
+	 * add change listener
+	 * @param l: change listener
+	 */
 	public void addChangeListener(ChangeListener l){
 		changeListeners.add(l);
 	}
-	
+	/**
+	 * add change listener to event
+	 * @param l: change listener
+	 */
 	public void addEventListener(ChangeListener l){
 		eventListeners.add(l);
 	}
-	
 	@Override
 	public void set(int field, int value){
 		super.set(field, value);
 		notifyOfChange();
 	}
-	
+	/**
+	 * add single event and notify changes
+	 * @param event: Event
+	 */
 	public void addEvent(Event event){
-				events.add(event);
-				notifyOfChange();
-				notifyOfEventChange();
-			}
-	
-	public void addEvents(ArrayList<Event> events){
-		for (Event e : events)
-			this.events.add(e);
-		
+		events.add(event);
 		notifyOfChange();
 		notifyOfEventChange();
 	}
-	
+	/**
+	 * add an arraylist of events and notify changes
+	 * @param events: ArrayList<Event>
+	 */
+	public void addEvents(ArrayList<Event> events){
+		for (Event e : events)
+			this.events.add(e);
+		notifyOfChange();
+		notifyOfEventChange();
+	}
+	/**
+	 * load events from existed file
+	 * @throws Exception: input file error
+	 */
 	public void loadEvent() throws Exception{
 		Scanner inFile = new Scanner(Paths.get("input.txt"));
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -88,7 +112,12 @@ public class CalendarWithEvents extends GregorianCalendar {
 		
 		notifyOfEventChange();
 	}
-	
+	/**
+	 * get events agenda between certain dates
+	 * @param startDate: Date
+	 * @param endDate: Date
+	 * @return arraylist of events
+	 */
 	public ArrayList<Event> getEventsAgenda(Date startDate, Date endDate){
 		Calendar clStart = Calendar.getInstance();
 		Calendar clEnd = Calendar.getInstance();
@@ -97,7 +126,12 @@ public class CalendarWithEvents extends GregorianCalendar {
 		
 		return getEventsAgenda(clStart, clEnd);
 	}
-	
+	/**
+	 * get events agenda between certain dates
+	 * @param clStart: Calendar
+	 * @param clEnd: Calendar
+	 * @return arraylist of events
+	 */
 	public ArrayList<Event> getEventsAgenda(Calendar clStart, Calendar clEnd){
 		ArrayList<Event> thisEvents = new ArrayList<Event>();
 		
@@ -121,7 +155,9 @@ public class CalendarWithEvents extends GregorianCalendar {
 		}
 		return thisEvents;
 	}
-	
+	/**
+	 * @return arraylist of events in this month
+	 */
 	public ArrayList<Event> getEventsThisMonth(){
 		ArrayList<Event> monthEvents = new ArrayList<Event>();
 		
@@ -135,7 +171,9 @@ public class CalendarWithEvents extends GregorianCalendar {
 		
 		return monthEvents;
 	}
-	
+	/**
+	 * @return arraylist of events in this week
+	 */
 	public ArrayList<Event> getEventsThisWeek(){
 		ArrayList<Event> weekEvents = new ArrayList<Event>();
 		
@@ -151,7 +189,9 @@ public class CalendarWithEvents extends GregorianCalendar {
 		
 		return weekEvents;
 	}
-	
+	/**
+	 * @return arraylist of today's events
+	 */
 	public ArrayList<Event> getEventsToday(){
 		ArrayList<Event> dayEvents = new ArrayList<Event>();
 		
@@ -166,7 +206,13 @@ public class CalendarWithEvents extends GregorianCalendar {
 		
 		return dayEvents;
 	}
-	
+	/**
+	 * get certain date's events
+	 * @param day: int
+	 * @param month: int
+	 * @param year: int
+	 * @return arraylist of events on that date
+	 */
 	public ArrayList<Event> getEventsOnDate(int day, int month, int year){
 		ArrayList<Event> dateEvents = new ArrayList<Event>();
 		
@@ -181,19 +227,27 @@ public class CalendarWithEvents extends GregorianCalendar {
 		Collections.sort(dateEvents, new EventComparator());
 		return dateEvents;
 	}
-	
+	/**
+	 * notify changes
+	 */
 	private void notifyOfChange(){
 		ChangeEvent ce = new ChangeEvent(this);
 		for (ChangeListener l : changeListeners)
 			l.stateChanged(ce);
 	}
-	
+	/**
+	 * notify event changes
+	 */
 	private void notifyOfEventChange(){
 		ChangeEvent ce = new ChangeEvent(this);
 		for (ChangeListener l : eventListeners)
 			l.stateChanged(ce);
 	}
-	
+	/**
+	 * transform letters in input file into day
+	 * @param arr: input String array
+	 * @return String array of day
+	 */
 	private String[] transform(String[] arr){ 	
 		for(int i=0; i<arr.length;i++){
 				if (arr[i].equals("M")){

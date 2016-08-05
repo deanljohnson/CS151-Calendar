@@ -9,9 +9,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Dialog pop up for user input dates to display events between selected dates.
+ * @author Three Amigos
+ */
+
 public class AgendaDialog {
 	private static Date sDate;
 	private static Date eDate;
+	/**
+	 * show dialog and allow user to input dates
+	 * @param cal: CalendarWithEvents
+	 */
 	public static void ShowDialog(CalendarWithEvents cal){
 		JTextField sDateField = new JTextField(10);
 		JTextField eDateField = new JTextField(10);
@@ -28,7 +37,7 @@ public class AgendaDialog {
 		if (response == JOptionPane.OK_OPTION){
 			
 			SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
-
+			// throw and catch exceptions, for date format and end date has to be after start date
 			try {
 				sDate = (Date) date.parse(sDateField.getText());
 				eDate = (Date) date.parse(eDateField.getText());
@@ -40,9 +49,15 @@ public class AgendaDialog {
 			}
 		}
 	}
+	/**
+	 * @return start date
+	 */
 	public static Date getStartDate(){
 		return sDate;
 	}
+	/**
+	 * @return end date
+	 */
 	public static Date getEndDate(){
 		return eDate;
 	}
