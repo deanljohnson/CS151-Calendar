@@ -74,7 +74,7 @@ public class EventDisplayPanel extends JPanel {
 			try{
 				//TODO : Create and use a AgendaEventsView here
 				eventList = calendar.getEventsAgenda(AgendaDialog.getStartDate(),AgendaDialog.getEndDate());
-				eventView = new DayEventsView(eventList, width, height);
+				eventView = new AgendaEventsView(eventList, width, height);
 			}catch (Exception e){
 				
 			}
