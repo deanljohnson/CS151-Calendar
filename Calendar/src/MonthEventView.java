@@ -10,8 +10,19 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+/**
+ * Viewer for displaying monthly events
+ * @author Three Amigos
+ */
+
 public class MonthEventView extends JPanel{
 	private DAYS[] arrayOfDays = DAYS.values();
+	/**
+	 * constructor
+	 * @param c: CalndarWithEvents
+	 * @param w: width
+	 * @param h: height
+	 */
 	public MonthEventView(CalendarWithEvents c, int w, int h){
 
 		//Maintain the dimension

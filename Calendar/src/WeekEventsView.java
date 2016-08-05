@@ -7,9 +7,19 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+/**
+ * Viewer for displaying weekly events
+ * @author Three Amigos
+ */
+
 public class WeekEventsView extends JPanel {
 	private DAYS[] arrayOfDays = DAYS.values();
-	
+	/**
+	 * constructor
+	 * @param events: arraylist of event
+	 * @param w: width
+	 * @param h: height
+	 */
 	public WeekEventsView(ArrayList<Event> events, int w, int h){
 		setLayout(new GridLayout(1, 7));
 		

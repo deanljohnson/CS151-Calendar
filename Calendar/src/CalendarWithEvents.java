@@ -62,7 +62,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 	}
 	/**
 	 * add an arraylist of events and notify changes
-	 * @param events: ArrayList<Event>
+	 * @param events: arrayList of event
 	 */
 	public void addEvents(ArrayList<Event> events){
 		for (Event e : events)
@@ -72,7 +72,7 @@ public class CalendarWithEvents extends GregorianCalendar {
 	}
 	/**
 	 * load events from existed file
-	 * @throws Exception: input file error
+	 * @throws Exception
 	 */
 	public void loadEvent() throws Exception{
 		Scanner inFile = new Scanner(Paths.get("input.txt"));

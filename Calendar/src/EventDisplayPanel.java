@@ -11,6 +11,11 @@ import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Viewer for displaying events
+ * @author Three Amigos
+ */
+
 public class EventDisplayPanel extends JPanel {
 	public enum FilterType{
 		Day, Week, Month, Agenda
@@ -21,7 +26,12 @@ public class EventDisplayPanel extends JPanel {
 	private int width;
 	private int height;
 	private JPanel eventView;
-	
+	/**
+	 * constructor
+	 * @param cal: CalendarWithEvents
+	 * @param w: width
+	 * @param h: height
+	 */
 	public EventDisplayPanel(CalendarWithEvents cal, int w, int h){
 		calendar = cal;
 		
@@ -48,12 +58,17 @@ public class EventDisplayPanel extends JPanel {
 		//Set a border, just so we can visualize where it is for now
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 	}
-	
+	/**
+	 * set filter type
+	 * @param t: FilterType
+	 */
 	public void setFilterType(FilterType t){
 		filter = t;
 		refreshView();
 	}
-	
+	/**
+	 * repaint view
+	 */
 	private void refreshView(){
 		//In here we will create and change the view to display
 		//the events from a particular day/week/month or to show

@@ -5,13 +5,22 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * Controller to select day, week, month, agenda view for events and load events from file.
+ * @author Three Amigos
+ */
+
 public class EventDisplaySelectionPanel extends JPanel {
 	private JButton dayButton;
 	private JButton weekButton;
 	private JButton monthButton;
 	private JButton agendaButton;
 	private JButton fromFileButton;
-	
+	/**
+	 * constructor
+	 * @param calendar: CalendarWithEvents
+	 * @param eventDisplay: EventDisplayPanel
+	 */
 	public EventDisplaySelectionPanel(CalendarWithEvents calendar, EventDisplayPanel eventDisplay){
 		dayButton = new JButton("Day");
 		weekButton = new JButton("Week");

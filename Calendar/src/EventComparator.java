@@ -1,5 +1,10 @@
 import java.util.Comparator;
 
+/**
+ * EventComparator class implements Compartor interface and for sorting events
+ * @author Three Amigos
+ */
+
 public class EventComparator implements Comparator<Event> {
 	@Override
 	public int compare(Event e1, Event e2) {

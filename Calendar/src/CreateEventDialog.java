@@ -41,7 +41,7 @@ public class CreateEventDialog {
 		if (response == JOptionPane.OK_OPTION){
 			String eTitle = titleField.getText();
 			SimpleDateFormat eDate = new SimpleDateFormat("MM/dd/yyyy");
-
+			// throw and catch time format, time conflict, and overlap events exceptions
 			try {
 				Date date = (Date) eDate.parse(dateField.getText());
 				LocalTime sTime = parseTime(sTimeField.getText());
@@ -60,7 +60,12 @@ public class CreateEventDialog {
 			}
 		}
 	}
-	
+	/**
+	 * convert am, pm time format to 24 hour format
+	 * @param s: String
+	 * @return 24 hour time
+	 * @throws Exception: time format
+	 */
 	private static LocalTime parseTime(String s) throws Exception{
 		boolean am = s.endsWith("am") || s.endsWith("AM");
 		boolean pm = s.endsWith("pm") || s.endsWith("PM");
@@ -93,7 +98,12 @@ public class CreateEventDialog {
 		
 		return LocalTime.of(hour, min);
 	}
-	
+	/**
+	 * check if event is overlapping with existed events
+	 * @param cal: CalendarWithEvents
+	 * @param ev: Event
+	 * @return false if event is overlapping
+	 */
 	private static boolean overlappingEvent(CalendarWithEvents cal, Event ev){
 		Calendar clStart = Calendar.getInstance();
 		clStart.set(ev.getYear(), ev.getMonth(), ev.getDay(), ev.getStartTime().getHour(), ev.getStartTime().getMinute());

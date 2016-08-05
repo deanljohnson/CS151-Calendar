@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import java.util.Calendar;
 
 /**
- * default coloring strategy for buttons, which implements IButtonCloringStrategy interface
+ * Default coloring strategy for buttons, which implements IButtonCloringStrategy interface
  * @author Three Amigos
  */
 
