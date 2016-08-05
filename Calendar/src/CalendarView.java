@@ -75,19 +75,12 @@ public class CalendarView extends JPanel {
 		selectedButton = b;
 		selectedDate = d; // update selected day
 		colorStrat.color(selectedButton, selectedDate, cal, true);
-		
 	}
 	
 	public void moveToToday(){
-		if(cal.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH) &&
-				cal.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)){
-			return;
-		}
-		else{
 		cal.setTime(Calendar.getInstance().getTime());
 		selectedDate = cal.get(Calendar.DAY_OF_MONTH);
 		refreshCalendar();
-		}
 	}
 	
 	public void moveToPrevMonth(){
