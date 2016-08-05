@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * @author Three Amigos
+ */
+
 public class Calendar {
 	private static final int WIDTH = 1400;
 	private static final int HEIGHT = 800;
@@ -25,29 +29,9 @@ public class Calendar {
 		//Setup the left panel. This includes the buttons to navigate the calendar,
 		//as well as the calendar itself
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
-		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
 		CalendarView calView = new CalendarView(calendar, WIDTH/3, WIDTH/3);
+		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel(calendar, calView);
 		
-		calNavPanel.getTodayButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				calView.moveToToday();
-			}
-		});
-		calNavPanel.getPrevButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				calView.moveToPrevMonth();
-			}
-		});
-		calNavPanel.getNextButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				calView.moveToNextMonth();
-			}
-		});
-		calNavPanel.getCreateButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				CreateEventDialog.ShowDialog(calendar);
-			}
-		});
 		leftPanel.add(calNavPanel);
 		leftPanel.add(calView);
 		
@@ -55,43 +39,9 @@ public class Calendar {
 		//Setup the right panel. This includes the row of buttons to filter events,
 		//(day, week, month, agenda), and a panel that show the events
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel();
 		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar,WIDTH/2, WIDTH/2);
-		eventSelPanel.getDayButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Day);
-			}
-		});
-		eventSelPanel.getWeekButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Week);
-			}
-		});
-		eventSelPanel.getMonthButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Month);
-			}
-		});
-		eventSelPanel.getAgendaButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				AgendaDialog.ShowDialog(calendar);
-				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Agenda);
-			}
-		});
-		eventSelPanel.getFromFileButton().addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					calendar.loadEvent();
-					JOptionPane.showMessageDialog(null, "File found and Events loaded.\n"
-							+ "Click Day, Week, Month, Agenda to view loaded events.", 
-							"Success", JOptionPane.INFORMATION_MESSAGE);
-				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, "Error found while loading file and events.\n"
-							+ "Try examining input.txt file and fix errors.", "Input Error",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
+		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel(calendar, eventDisplay);
+		
 		rightPanel.add(eventSelPanel);
 		rightPanel.add(eventDisplay);
 
