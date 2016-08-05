@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Calendar {
-	private static final int WIDTH = 1050;
-	private static final int HEIGHT = 700;
+	private static final int WIDTH = 1400;
+	private static final int HEIGHT = 800;
 	
 	public static void main(String[] args){
 		CalendarWithEvents calendar = new CalendarWithEvents();
@@ -26,7 +26,7 @@ public class Calendar {
 		//as well as the calendar itself
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		CalendarNavigationPanel calNavPanel = new CalendarNavigationPanel();
-		CalendarView calView = new CalendarView(calendar, 500, 500);
+		CalendarView calView = new CalendarView(calendar, WIDTH/3, WIDTH/3);
 		
 		calNavPanel.getTodayButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -56,7 +56,7 @@ public class Calendar {
 		//(day, week, month, agenda), and a panel that show the events
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
 		EventDisplaySelectionPanel eventSelPanel = new EventDisplaySelectionPanel();
-		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar, 500, 500);
+		EventDisplayPanel eventDisplay = new EventDisplayPanel(calendar,WIDTH/2, WIDTH/2);
 		eventSelPanel.getDayButton().addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				eventDisplay.setFilterType(EventDisplayPanel.FilterType.Day);

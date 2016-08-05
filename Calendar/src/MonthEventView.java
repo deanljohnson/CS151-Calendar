@@ -39,7 +39,7 @@ public class MonthEventView extends JPanel{
 		int boxesAdded=0;
 		
 		for (int j=0; j<arrayOfDays.length; j++, boxesAdded++){
-			JButton tAreas = new JButton(""+arrayOfDays[j].toString().charAt(0));
+			JButton tAreas = new JButton(""+arrayOfDays[j].toString());
 			tAreas.setBorder(BorderFactory.createBevelBorder(1));
 			tAreas.setEnabled(false);
 			add(tAreas);
